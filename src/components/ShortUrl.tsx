@@ -1,11 +1,12 @@
 "use client";
-import { useState } from "react";
+import { BASE_URL } from "@/app/config/constants";
+import { FormEvent, useState } from "react";
 
 export default function ShortUrlForm() {
 	const [originalUrl, setOriginalUrl] = useState("");
 	const [shortUrl, setShortUrl] = useState("");
 
-	const handleUrlSubmit = async (e) => {
+	const handleUrlSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 		const res = await fetch("/api/shorten", {
 			method: "POST",
@@ -18,10 +19,11 @@ export default function ShortUrlForm() {
 		setShortUrl(data.shortUrl);
 	};
 
-	const handleCopyUrl = async () => {
+	const handleCopyUrl = async (e: React.MouseEvent<HTMLDivElement>) => {
+		e.preventDefault();
 		if (!shortUrl) return;
 		try {
-			await navigator.clipboard.writeText(shortUrl);
+			await navigator.clipboard.writeText(`${BASE_URL}${shortUrl}`);
 		} catch (error) {
 			console.error("Error copiant l'URL al porta-retalls:", error);
 		}
@@ -39,7 +41,7 @@ export default function ShortUrlForm() {
 				</p>
 
 				<form
-					onSubmit={handleUrlSubmit}
+					onSubmit={(e) => handleUrlSubmit(e)}
 					className='mb-6'
 				>
 					<div className='mb-4'>
@@ -70,7 +72,7 @@ export default function ShortUrlForm() {
 				{shortUrl && (
 					<div
 						className='bg-green-100 dark:bg-green-800 p-4 rounded-lg text-center hover:cursor-pointer hover:bg-green-900 transition-all duration-150'
-						onClick={handleCopyUrl}
+						onClick={(e) => handleCopyUrl(e)}
 					>
 						<div className='full flex justify-end'>
 							<svg
@@ -80,10 +82,10 @@ export default function ShortUrlForm() {
 								viewBox='0 0 24 24'
 								fill='none'
 								stroke='currentColor'
-								stroke-width='2'
-								stroke-linecap='round'
-								stroke-linejoin='round'
-								class='lucide lucide-clipboard-list'
+								strokeWidth='2'
+								strokeLinecap='round'
+								strokeLinejoin='round'
+								className='lucide lucide-clipboard-list'
 							>
 								<rect
 									width='8'
@@ -105,7 +107,7 @@ export default function ShortUrlForm() {
 							URL Retallada:
 						</p>
 						<p className='text-green-900 dark:text-green-100'>
-							{shortUrl}
+							{BASE_URL}{shortUrl}
 						</p>
 					</div>
 				)}
