@@ -5,14 +5,6 @@ export default function ShortUrlForm() {
 	const [originalUrl, setOriginalUrl] = useState("");
 	const [shortUrl, setShortUrl] = useState("");
 
-	// const handleUrlSubmit = (e) => {
-	// 	e.preventDefault();
-	// 	const fakeShortUrl = `https://guifre.link/${Math.random()
-	// 		.toString(36)
-	// 		.substring(2, 7)}`;
-	// 	setShortUrl(fakeShortUrl);
-	// };
-
 	const handleUrlSubmit = async (e) => {
 		e.preventDefault();
 		const res = await fetch("/api/shorten", {
@@ -23,8 +15,16 @@ export default function ShortUrlForm() {
 			body: JSON.stringify({ originalUrl }),
 		});
 		const data = await res.json();
-		console.log({ data });
 		setShortUrl(data.shortUrl);
+	};
+
+	const handleCopyUrl = async () => {
+		if (!shortUrl) return;
+		try {
+			await navigator.clipboard.writeText(shortUrl);
+		} catch (error) {
+			console.error("Error copiant l'URL al porta-retalls:", error);
+		}
 	};
 
 	return (
@@ -68,18 +68,45 @@ export default function ShortUrlForm() {
 				</form>
 
 				{shortUrl && (
-					<div className='bg-green-100 dark:bg-green-800 p-4 rounded-lg text-center'>
+					<div
+						className='bg-green-100 dark:bg-green-800 p-4 rounded-lg text-center hover:cursor-pointer hover:bg-green-900 transition-all duration-150'
+						onClick={handleCopyUrl}
+					>
+						<div className='full flex justify-end'>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								width='24'
+								height='24'
+								viewBox='0 0 24 24'
+								fill='none'
+								stroke='currentColor'
+								stroke-width='2'
+								stroke-linecap='round'
+								stroke-linejoin='round'
+								class='lucide lucide-clipboard-list'
+							>
+								<rect
+									width='8'
+									height='4'
+									x='8'
+									y='2'
+									rx='1'
+									ry='1'
+								/>
+								<path d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2' />
+								<path d='M12 11h4' />
+								<path d='M12 16h4' />
+								<path d='M8 11h.01' />
+								<path d='M8 16h.01' />
+							</svg>
+						</div>
+
 						<p className='text-green-800 dark:text-green-300'>
 							URL Retallada:
 						</p>
-						<a
-							href={shortUrl}
-							target='_blank'
-							rel='noopener noreferrer'
-							className='font-medium text-green-600 dark:text-green-400'
-						>
+						<p className='text-green-900 dark:text-green-100'>
 							{shortUrl}
-						</a>
+						</p>
 					</div>
 				)}
 			</div>
