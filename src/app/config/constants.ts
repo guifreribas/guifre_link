@@ -2,7 +2,7 @@ import { ENV } from "./config";
 
 let base_url;
 if (ENV === "prod") {
-	base_url = "https://guifre.link/";
+	base_url = "guifre.link/";
 } else {
 	base_url = "http://localhost:3000/";
 }
