@@ -1,6 +1,6 @@
 // pages/api/shorten.js
+import clientPromise from "@/app/lib/mongodb";
 import { NextResponse } from "next/server";
-import clientPromise from "../../lib/mongodb";
 
 export async function POST(request) {
 	const { originalUrl } = await request.json();
@@ -10,19 +10,15 @@ export async function POST(request) {
 		const db = client.db("shorturl");
 
 		// Generar l'URL curta
-		const baseUrl = "https://link.guifre.dev";
-		const shortName = Math.random().toString(36).substring(2, 7);
-		const shortUrl = `${baseUrl}/${shortName}`;
-		console.log(db, originalUrl);
-		console.log({ shortUrl });
+		const shortName = Math.random().toString(36).substring(2, 9);
+		const shortUrl = shortName;
 
 		// Inserir a la base de dades
-		const result = await db.collection("urls").insertOne({
+		await db.collection("urls").insertOne({
 			originalUrl,
 			shortUrl,
 			createdAt: new Date(),
 		});
-		console.log(result);
 
 		return NextResponse.json({ success: true, shortUrl }, { status: 200 });
 	} catch (error) {
@@ -35,8 +31,4 @@ export async function POST(request) {
 			{ status: 500 }
 		);
 	}
-}
-
-export async function GET() {
-	return NextResponse.json({ message: "HELLO!" });
 }
