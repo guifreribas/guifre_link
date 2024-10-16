@@ -1,3 +1,3 @@
 type Env = "dev" | "prod";
 
-export const ENV: Env = "dev";
+export const ENV: Env = "prod";
