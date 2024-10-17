@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Guifre Link
 
-## Getting Started
+Guifre Link is a URL shortener web application built with Next.js 14 and MongoDB.
 
-First, run the development server:
+## Features
 
-```bash
+-   Shorten long URLs into compact, easy-to-share links
+-   Redirect users from shortened URLs to their original destinations
+-   Built with modern web technologies for optimal performance
+
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+-   Node.js (v20.14.0 or later)
+-   MongoDB account and connection string
+-   Git (for cloning the repository)
+
+## Installation
+
+1. Clone the repository:
+
+    ```
+    git clone https://github.com/guifreribas/guifre_link.git
+    cd guifre-link
+    ```
+
+2. Install dependencies:
+
+    ```
+    npm install
+    ```
+
+3. Set up environment variables:
+   Create a `.env.local` file in the root directory and add your MongoDB connection string:
+    ```
+    MONGODB_URI=your_mongodb_connection_string_here
+    ```
+
+## Usage
+
+To run the development server:
+
+```
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To build and start the production server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application will be available at `http://localhost:3000` by default.
 
-## Learn More
+## API Endpoints
 
-To learn more about Next.js, take a look at the following resources:
+-   `POST /shorten`: Create a shortened URL
+-   `GET /:shortUrl`: Redirect to the original URL
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+For more detailed API documentation, please refer to the API section in the project.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+You can deploy this application to any platform that supports Next.js applications. Some popular options include Vercel, Netlify, and Heroku. Refer to your chosen platform's documentation for specific deployment instructions.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+We welcome contributions to Guifre Link! Here's how you can contribute:
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature-branch-name`
+3. Make your changes and commit them: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature-branch-name`
+5. Create a pull request
+
+Please ensure your code adheres to the project's coding conventions and includes appropriate tests.
+
+### Reporting Issues
+
+If you find a bug or have a suggestion for improvement, please open an issue on the GitHub repository.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Disclaimer
+
+This software is provided "as is", without warranty of any kind. The author(s) of Guifre Link are not responsible for any damages or liabilities associated with the use of this software.
