@@ -3,7 +3,7 @@ import ShortUrlForm from "../components/ShortUrl";
 
 export default function Home() {
   return (
-    <article className="flex flex-col justify-center items-center gap-4 min-h-screen bg-gray-100 dark:bg-gray-800 border">
+    <article className="flex flex-col justify-center items-center gap-4 min-h-screen bg-gray-100 dark:bg-gray-800">
 
       <section className="flex flex-col max-w-4xl w-fullbg-white gap-2 p-8 dark:bg-gray-900 rounded-lg shadow-md">
         <h1 className="text-center font-bold text-2xl md:text-5xl">Guifre Link</h1>
