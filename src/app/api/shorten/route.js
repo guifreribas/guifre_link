@@ -10,7 +10,7 @@ export async function POST(request) {
 		const db = client.db("shorturl");
 
 		// Generar l'URL curta
-		const shortName = Math.random().toString(36).substring(2, 9);
+		const shortName = Math.random().toString(36).substring(2, 7);
 		const shortUrl = shortName;
 
 		// Inserir a la base de dades
