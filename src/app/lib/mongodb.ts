@@ -1,6 +1,7 @@
 import { MongoClient, MongoClientOptions } from "mongodb";
+import { MONGODB_CONFIG } from "@/app/config/mongodb";
 
-const uri: string = process.env.MONGODB_URI || "";
+const uri: string = MONGODB_CONFIG.uri;
 const options: MongoClientOptions = {};
 
 let client: MongoClient;
@@ -16,7 +17,7 @@ const globalWithMongoClientPromise: CustomNodeJsGlobal =
 	global as CustomNodeJsGlobal;
 
 if (!uri) {
-	throw new Error("Please add your Mongo URI to .env.local");
+	throw new Error("Missing MONGODB_URI - Please check your environment variables");
 }
 
 if (process.env.NODE_ENV === "development") {
@@ -29,5 +30,18 @@ if (process.env.NODE_ENV === "development") {
 	client = new MongoClient(uri, options);
 	clientPromise = client.connect();
 }
+
+const setupTTLIndex = async () => {
+	try {
+		const client = await clientPromise;
+		const db = client.db(MONGODB_CONFIG.dbName);
+		await db.collection(MONGODB_CONFIG.collections.urls).createIndex({ createdAt: 1 }, { expireAfterSeconds: MONGODB_CONFIG.ttl.seconds });
+		console.log("TTL index created successfully");
+	} catch (error) {
+		console.error("Error creating TTL index:", error);
+	}
+}
+
+setupTTLIndex();
 
 export default clientPromise;
